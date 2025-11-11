@@ -6,7 +6,6 @@ import {
   NextjsIcon,
   NodejsIcon,
   ReactIcon,
-  SocketIcon,
   TailwindCSS,
   TypescriptIcon,
 } from '../utils/icons'
@@ -103,35 +102,31 @@ export const serviceData = [
 export const skillList = [
   {
     name: 'JavaScript',
-    icon: JavaScriptIcon,
+    icon: 'javascript',
   },
   {
     name: 'TypeScript',
-    icon: TypescriptIcon,
+    icon: 'typescript',
   },
   {
     name: 'React.js',
-    icon: ReactIcon,
+    icon: 'react',
   },
   {
     name: 'Next.js',
-    icon: NextjsIcon,
+    icon: 'nextjs',
   },
   {
     name: 'Node.js',
-    icon: NodejsIcon,
+    icon: 'nodejs',
   },
   {
     name: 'Express.js',
-    icon: ExpressjsIcon,
+    icon: 'expressjs',
   },
   {
     name: 'Nest.js',
-    icon: NestjsIcon,
-  },
-  {
-    name: 'Socket.io',
-    icon: SocketIcon,
+    icon: 'nestjs',
   },
 ]
 
