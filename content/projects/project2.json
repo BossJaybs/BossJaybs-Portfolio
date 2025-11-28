@@ -2,6 +2,6 @@
   "priority": 3,
   "title": "Point of Sale System",
   "shortDescription": "A Point of Sale (POS) system is a combination of hardware and software used by businesses to process transactions, manage sales, and handle customer interactions at the checkout counter. It typically includes a cash register, barcode scanner, receipt printer, and payment processing tools, often integrated with inventory management and analytics.",
-  "cover": "https://res.cloudinary.com/dyvkdwzcj/image/upload/v1656970810/Codevertiser_xlxdje.png",
+  "cover": "https://raw.githubusercontent.com/BossJaybs/BossJaybs-Portfolio/main/public/image/pos.png",
   "livePreview": "https://posgroup4.vercel.app/"
 }
