@@ -24,13 +24,15 @@ const Hero = () => {
 
           <div className="mt-6 flex flex-wrap gap-6">
             <a
-              href="#"
+              href="#contact"
               aria-label="Connect with me"
               className="bg-accent min-w-32 cursor-pointer rounded-lg px-[14px] py-[10px] text-center text-sm font-medium text-[#00071E]">
               Hire Me
             </a>
             <a
-              href="#"
+              href="https://www.linkedin.com/in/jaybee-maranan-a91a95240/"
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label="View LinkedIn Profile"
               className="text-neutral bg-secondary cursor-pointer rounded-lg px-[14px] py-[10px] text-sm">
               LinkedIn Profile
