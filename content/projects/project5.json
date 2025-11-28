@@ -1,0 +1,9 @@
+{
+  "priority": 5,
+  "title": "AI Content Generator",
+  "shortDescription": "AI Content Generation Dashboard using Google Gemini API, Clerk authentication, and NEON PostgreSQL with Drizzle ORM",
+  "cover": "/images/GENERATOR.png",
+  "livePreview": "https://jaybeegenerator.vercel.app/",
+  "githubLink": "https://github.com/BossJaybs/AI-GENERATOR",
+  "type": "Personal Project"
+}
