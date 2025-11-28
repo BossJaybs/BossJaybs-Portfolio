@@ -5,28 +5,23 @@ import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { BurgerIcon, CloseIcon } from '../../utils/icons'
 import Logo from './Logo'
-import { Dock, DockIcon, DockItem, DockLabel } from '../Dock/Dock'
 
 const navItems = [
   {
     label: 'home',
     href: '/',
-    icon: '🏠',
   },
   {
     label: 'projects',
     href: '/#projects',
-    icon: '📁',
   },
   {
     label: 'services',
     href: '/#services',
-    icon: '⚙️',
   },
   {
     label: 'contact-me',
     href: '/#contact',
-    icon: '📧',
   },
 ]
 
@@ -62,23 +57,8 @@ const Navbar = () => {
           </button>
         </div>
 
-        <div className="hidden md:flex">
-          <Dock>
-            {navItems.map(({ label, href, icon }) => (
-              <DockItem key={href}>
-                <DockIcon>
-                  <Link href={href} className="text-primary-content">
-                    {icon}
-                  </Link>
-                </DockIcon>
-                <DockLabel>{label}</DockLabel>
-              </DockItem>
-            ))}
-          </Dock>
-        </div>
-
         <ul
-          className={`${isVisible ? 'flex' : 'hidden'} animate-fade-in bg-primary absolute top-16 left-0 z-10 h-dvh w-dvw flex-col md:static md:top-0 md:hidden md:h-full md:w-[72%] md:flex-row lg:w-[70%]`}>
+          className={`${isVisible ? 'flex' : 'hidden'} animate-fade-in bg-primary absolute top-16 left-0 z-10 h-dvh w-dvw flex-col md:static md:top-0 md:flex md:h-full md:w-[72%] md:flex-row lg:w-[70%]`}>
           {navItems.map(({ label, href }) => (
             <li
               key={href}
