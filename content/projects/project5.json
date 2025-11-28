@@ -1,5 +1,5 @@
 {
-  "priority": 5,
+  "priority": 1,
   "title": "AI Content Generator",
   "shortDescription": "AI Content Generation Dashboard using Google Gemini API, Clerk authentication, and NEON PostgreSQL with Drizzle ORM",
   "cover": "https://raw.githubusercontent.com/BossJaybs/BossJaybs-Portfolio/main/public/image/GENERATOR.png",
