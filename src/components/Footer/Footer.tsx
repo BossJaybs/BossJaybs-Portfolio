@@ -1,6 +1,99 @@
+"use client"
+
+import * as React from "react"
 import { footerLinks, languages } from '@/appData'
 import { socials } from '@/appData/personal'
 import Logo from '../Navbar/Logo'
+import { motion, AnimatePresence } from "framer-motion"
+import { cn } from "@/lib/utils"
+
+interface Social {
+  name: string
+  image: string
+  href: string
+}
+
+interface SocialLinksProps extends React.HTMLAttributes<HTMLDivElement> {
+  socials: Social[]
+}
+
+function SocialLinks({ socials, className, ...props }: SocialLinksProps) {
+  const [hoveredSocial, setHoveredSocial] = React.useState<string | null>(null)
+  const [rotation, setRotation] = React.useState<number>(0)
+  const [clicked, setClicked] = React.useState<boolean>(false)
+
+  const animation = {
+    scale: clicked ? [1, 1.3, 1] : 1,
+    transition: { duration: 0.3 },
+  }
+
+  React.useEffect(() => {
+    const handleClick = () => {
+      setClicked(true)
+      setTimeout(() => {
+        setClicked(false)
+      }, 200)
+    }
+    window.addEventListener("click", handleClick)
+    return () => window.removeEventListener("click", handleClick)
+  }, [clicked])
+
+  return (
+    <div
+      className={cn("flex items-center justify-center gap-0", className)}
+      {...props}
+    >
+      {socials.map((social, index) => (
+        <a
+          href={social.href || '#'}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={cn(
+            "relative cursor-pointer px-5 py-2 transition-opacity duration-200",
+            hoveredSocial && hoveredSocial !== social.name
+              ? "opacity-50"
+              : "opacity-100"
+          )}
+          key={index}
+          onMouseEnter={() => {
+            setHoveredSocial(social.name)
+            setRotation(Math.random() * 20 - 10)
+          }}
+          onMouseLeave={() => setHoveredSocial(null)}
+          onClick={() => {
+            setClicked(true)
+          }}
+        >
+          <span className="block text-xl font-medium">{social.name}</span>
+          <AnimatePresence>
+            {hoveredSocial === social.name && (
+              <motion.div
+                className="absolute bottom-0 left-0 right-0 flex h-full w-full items-center justify-center"
+                animate={animation}
+              >
+                <motion.img
+                  key={social.name}
+                  src={social.image}
+                  alt={social.name}
+                  className="size-20"
+                  initial={{
+                    y: -40,
+                    rotate: rotation,
+                    opacity: 0,
+                    filter: "blur(2px)",
+                  }}
+                  animate={{ y: -50, opacity: 1, filter: "blur(0px)" }}
+                  exit={{ y: -40, opacity: 0, filter: "blur(2px)" }}
+                  transition={{ duration: 0.2 }}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </a>
+      ))}
+    </div>
+  )
+}
 
 const Footer = () => {
   return (
@@ -34,64 +127,8 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="relative z-20 flex flex-col-reverse gap-20 md:grid md:grid-cols-2 md:gap-12">
-        <div className="grid grid-cols-2 gap-4">
-          <ul className="flex flex-col gap-4">
-            {socials.map((item, index) => (
-              <li key={index} className="cursor-pointer bg-transparent">
-                <a
-                  href={item.href}
-                  className="text-neutral transition-color hover:text-neutral/50 h-full w-full duration-300">
-                  {item.icon}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <p className="text-tertiary-content flex flex-col self-end text-right text-xs md:text-center">
-            <span>© 2025 — Copyright</span>
-            <span>All Rights reserved</span>
-          </p>
-        </div>
-
-        <div className="flex flex-col justify-between gap-[200px] md:flex-row md:gap-8">
-          <div className="space-y-10 md:self-end">
-            <div className="flex flex-col">
-              <h5 className="text-neutral mb-4 text-lg font-medium">Contact Us</h5>
-              <a
-                href="mailto:johndoe@gmail.com"
-                className="text-tertiary-content hover:text-neutral text-sm font-light transition-colors duration-300">
-                johndoe@gmail.com
-              </a>
-              <a
-                href="tel:+92 3123456789"
-                className="text-tertiary-content hover:text-neutral text-sm font-light transition-colors duration-300">
-                +92 3123456789
-              </a>
-            </div>
-            <div>
-              <div>
-                <h5 className="text-neutral mb-4 text-lg font-medium">Location</h5>
-                <address className="text-tertiary-content flex flex-col text-sm font-light">
-                  <span>123456, Pakistan</span>
-                  <span>Karachi 22/5/8, Office 4</span>
-                </address>
-              </div>
-            </div>
-          </div>
-
-          <div className="md:self-end">
-            <p className="text-neutral mb-8 text-sm md:text-right">Languages</p>
-            <div className="flex gap-8 md:gap-4 lg:gap-8">
-              {languages.map((language, idx) => (
-                <span
-                  key={language}
-                  className={idx === 0 ? 'text-neutral' : 'text-tertiary-content'}>
-                  {language}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
+      <div className="relative z-20">
+        <SocialLinks socials={socials} className="flex flex-row gap-4 justify-center" />
       </div>
 
       <div className="bg-neutral/4 absolute top-1/2 -right-[40%] z-0 h-[120dvw] w-[120dvw] -translate-y-1/2 rounded-full p-14 md:top-0 md:-right-[255px] md:-bottom-[450px] md:size-[1030px] md:-translate-y-0 md:p-20">
