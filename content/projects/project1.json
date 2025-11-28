@@ -1,9 +1,8 @@
 {
   "priority": 2,
-  "title": "Color Contrast Collection",
-  "shortDescription": "Curated Background with Text colors contrast, help you to pick best contrast for your websites",
+  "title": "Learning Habits Tracker",
+  "shortDescription": "A learning habit tracker is a tool or app designed to help individuals monitor, build, and maintain consistent learning routines. It allows users to log daily or weekly progress on educational goals, such as reading, studying, or skill-building activities, often through checklists, calendars, or visual charts.",
   "cover": "https://res.cloudinary.com/dyvkdwzcj/image/upload/v1645090814/color-contrast_n598kw.png",
   "livePreview": "https://softengtracker.vercel.app/",
-  "type": "Client Work 🙍‍♂️",
-  "siteAge": "1 month old"
+  "type": "Finals Project 🔥"
 }
