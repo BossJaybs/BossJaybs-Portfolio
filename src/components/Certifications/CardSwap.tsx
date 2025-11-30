@@ -27,7 +27,7 @@ export const Card: React.FC<CardProps> = ({ children, pdfUrl }) => {
       className="bg-secondary p-6 rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300"
       onClick={handleClick}
     >
-      <div className="w-full h-32 bg-white rounded-md mb-4 flex items-center justify-center">
+      <div className="w-full h-48 bg-white rounded-md mb-4 flex items-center justify-center">
         <span className="text-gray-500">Certificate Cover</span>
       </div>
       {children}
@@ -36,59 +36,46 @@ export const Card: React.FC<CardProps> = ({ children, pdfUrl }) => {
 }
 
 const CardSwap: React.FC<CardSwapProps> = ({
-  cardDistance = 60,
-  verticalDistance = 70,
-  delay = 5000,
-  pauseOnHover = false,
   children
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [isPaused, setIsPaused] = useState(false)
 
-  useEffect(() => {
-    if (pauseOnHover && isPaused) return
-
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % children.length)
-    }, delay)
-
-    return () => clearInterval(interval)
-  }, [children.length, delay, pauseOnHover, isPaused])
-
-  const handleMouseEnter = () => {
-    if (pauseOnHover) setIsPaused(true)
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + children.length) % children.length)
   }
 
-  const handleMouseLeave = () => {
-    if (pauseOnHover) setIsPaused(false)
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % children.length)
   }
 
   return (
-    <div
-      className="relative flex justify-center items-center"
-      style={{ height: '600px' }}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      {children.map((child, index) => {
-        const isActive = index === currentIndex
-        const offset = (index - currentIndex) * cardDistance
-        const verticalOffset = Math.abs(index - currentIndex) * verticalDistance
-
-        return (
-          <div
-            key={index}
-            className={`absolute transition-all duration-500 ease-in-out ${
-              isActive ? 'z-10 scale-105' : 'z-0 scale-95 opacity-70'
-            }`}
-            style={{
-              transform: `translateX(${offset}px) translateY(${verticalOffset}px)`,
-            }}
-          >
-            {child}
-          </div>
-        )
-      })}
+    <div className="relative w-full">
+      <div className="flex overflow-hidden">
+        <div
+          className="flex transition-transform duration-500 ease-in-out"
+          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        >
+          {children.map((child, index) => (
+            <div key={index} className="w-full flex-shrink-0">
+              {child}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="flex justify-end gap-2 mt-4">
+        <button
+          onClick={handlePrev}
+          className="bg-gray-800 text-white p-2 rounded-full hover:bg-gray-700 transition-colors"
+        >
+          ←
+        </button>
+        <button
+          onClick={handleNext}
+          className="bg-gray-800 text-white p-2 rounded-full hover:bg-gray-700 transition-colors"
+        >
+          →
+        </button>
+      </div>
     </div>
   )
 }
