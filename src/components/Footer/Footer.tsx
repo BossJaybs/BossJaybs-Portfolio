@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { footerLinks, languages } from '@/appData'
+import { footerLinks } from '@/appData'
 import { socials } from '@/appData/personal'
 import Logo from '../Navbar/Logo'
 import { motion, AnimatePresence } from "framer-motion"

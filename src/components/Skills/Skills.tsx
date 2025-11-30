@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
-import { FC, SVGProps, ReactElement } from 'react'
+import { ReactElement } from 'react'
 import {
   ExpressjsIcon,
   JavaScriptIcon,
@@ -9,7 +9,6 @@ import {
   NextjsIcon,
   NodejsIcon,
   ReactIcon,
-  TailwindCSS,
   TypescriptIcon,
 } from '../../utils/icons'
 

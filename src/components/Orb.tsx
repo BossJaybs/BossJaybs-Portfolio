@@ -3,19 +3,9 @@
 import { useEffect, useRef } from 'react';
 import { Renderer, Camera, Transform, Sphere, Program, Mesh } from 'ogl';
 
-interface OrbProps {
-  hoverIntensity?: number;
-  rotateOnHover?: boolean;
-  hue?: number;
-  forceHoverState?: boolean;
-}
+interface OrbProps {}
 
-const Orb: React.FC<OrbProps> = ({
-  hoverIntensity = 0.5,
-  rotateOnHover = true,
-  hue = 0,
-  forceHoverState = false
-}) => {
+const Orb: React.FC<OrbProps> = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {

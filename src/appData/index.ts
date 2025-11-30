@@ -1,8 +1,6 @@
 // Data for portfolio
 import {
-  ExpressjsIcon,
   JavaScriptIcon,
-  NestjsIcon,
   NextjsIcon,
   NodejsIcon,
   ReactIcon,

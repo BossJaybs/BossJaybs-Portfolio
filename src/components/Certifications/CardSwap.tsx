@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 
 interface CardSwapProps {
@@ -66,10 +66,6 @@ const CardSwap: React.FC<CardSwapProps> = ({
     goToSlide((currentIndex + 1) % children.length)
   }
 
-  const goToPrev = () => {
-    goToSlide((currentIndex - 1 + children.length) % children.length)
-  }
-
   // Auto-play functionality
   useEffect(() => {
     const interval = setInterval(() => {
@@ -77,7 +73,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
     }, 5000) // Change slide every 5 seconds
 
     return () => clearInterval(interval)
-  }, [currentIndex, children.length])
+  }, [goToNext])
 
   return (
     <div className="relative w-full max-w-6xl mx-auto">

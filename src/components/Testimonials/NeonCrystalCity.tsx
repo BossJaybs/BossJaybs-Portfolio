@@ -249,7 +249,7 @@ const NeonCrystalCity: FC<NeonCrystalCityProps> = ({
     resize();
 
     // Render loop
-    const render = (t: number) => {
+    const render = () => {
       if (error) return;
 
       gl.clear(gl.COLOR_BUFFER_BIT);
