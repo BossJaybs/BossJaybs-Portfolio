@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 
 interface CardSwapProps {
@@ -53,20 +53,51 @@ const CardSwap: React.FC<CardSwapProps> = ({
   children
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
+  const [startX, setStartX] = useState(0)
+  const [scrollLeft, setScrollLeft] = useState(0)
+  const carouselRef = useRef<HTMLDivElement>(null)
 
-  const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + children.length) % children.length)
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true)
+    setStartX(e.pageX - (carouselRef.current?.offsetLeft || 0))
+    setScrollLeft(currentIndex * (carouselRef.current?.clientWidth || 1))
   }
 
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % children.length)
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return
+    e.preventDefault()
+    const x = e.pageX - (carouselRef.current?.offsetLeft || 0)
+    const walk = (x - startX) * 2
+    const newScrollLeft = scrollLeft - walk
+    const maxScroll = (children.length - 1) * (carouselRef.current?.clientWidth || 1)
+
+    if (newScrollLeft >= 0 && newScrollLeft <= maxScroll) {
+      const newIndex = Math.round(newScrollLeft / (carouselRef.current?.clientWidth || 1))
+      setCurrentIndex(Math.max(0, Math.min(children.length - 1, newIndex)))
+    }
+  }
+
+  const handleMouseUp = () => {
+    setIsDragging(false)
+  }
+
+  const handleMouseLeave = () => {
+    setIsDragging(false)
   }
 
   return (
     <div className="relative w-full max-w-6xl mx-auto">
-      <div className="flex justify-center overflow-hidden">
+      <div
+        className="flex justify-center overflow-hidden cursor-grab active:cursor-grabbing select-none"
+        ref={carouselRef}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+      >
         <div
-          className="flex transition-transform duration-500 ease-in-out"
+          className="flex transition-transform duration-300 ease-out"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {children.map((child, index) => (
@@ -76,19 +107,18 @@ const CardSwap: React.FC<CardSwapProps> = ({
           ))}
         </div>
       </div>
-      <div className="flex justify-center gap-6 mt-8">
-        <button
-          onClick={handlePrev}
-          className="bg-gray-800 text-white p-4 rounded-full hover:bg-gray-700 transition-colors shadow-lg text-xl"
-        >
-          ←
-        </button>
-        <button
-          onClick={handleNext}
-          className="bg-gray-800 text-white p-4 rounded-full hover:bg-gray-700 transition-colors shadow-lg text-xl"
-        >
-          →
-        </button>
+      <div className="flex justify-center mt-4">
+        <div className="flex gap-2">
+          {children.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`w-3 h-3 rounded-full transition-colors ${
+                index === currentIndex ? 'bg-gray-800' : 'bg-gray-400'
+              }`}
+            />
+          ))}
+        </div>
       </div>
     </div>
   )
