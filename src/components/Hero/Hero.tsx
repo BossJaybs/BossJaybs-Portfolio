@@ -21,6 +21,7 @@ const Hero = () => {
               speed={3}
               className="text-neutral mb-2 block text-3xl font-bold"
             />
+            <br />
             <ShinyText
               text={role}
               disabled={false}
