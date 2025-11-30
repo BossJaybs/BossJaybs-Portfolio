@@ -26,23 +26,25 @@ export const Card: React.FC<CardProps> = ({ children, pdfUrl, coverImage }) => {
 
   return (
     <div
-      className="bg-secondary p-4 md:p-6 rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300 mx-auto max-w-sm md:max-w-md"
+      className="bg-secondary p-6 md:p-8 rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300 mx-auto max-w-md md:max-w-lg flex flex-col items-center"
       onClick={handleClick}
     >
-      <div className="w-full h-64 md:h-72 bg-black rounded-md mb-4 flex items-center justify-center overflow-hidden p-2">
+      <div className="w-full h-72 md:h-80 bg-black rounded-md mb-6 flex items-center justify-center overflow-hidden p-3">
         {coverImage ? (
           <Image
             src={coverImage}
             alt="Certificate cover"
-            width={320}
-            height={240}
+            width={360}
+            height={270}
             className="max-w-full max-h-full object-contain rounded"
           />
         ) : (
           <span className="text-gray-500">Certificate Cover</span>
         )}
       </div>
-      {children}
+      <div className="text-center w-full">
+        {children}
+      </div>
     </div>
   )
 }
