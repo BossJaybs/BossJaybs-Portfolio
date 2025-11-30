@@ -36,7 +36,7 @@ export const Card: React.FC<CardProps> = ({ children, pdfUrl, coverImage }) => {
             alt="Certificate cover"
             width={300}
             height={200}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
           />
         ) : (
           <span className="text-gray-500">Certificate Cover</span>
