@@ -16,48 +16,22 @@ interface CardProps {
 }
 
 export const Card: React.FC<CardProps> = ({ children, pdfUrl }) => {
-  const [showModal, setShowModal] = useState(false)
-
   const handleClick = () => {
     if (pdfUrl) {
-      setShowModal(true)
+      window.open(pdfUrl, '_blank')
     }
   }
 
-  const handleClose = () => {
-    setShowModal(false)
-  }
-
   return (
-    <>
-      <div
-        className="bg-secondary p-6 rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300"
-        onClick={handleClick}
-      >
-        <div className="w-full h-64 bg-white rounded-md mb-4 flex items-center justify-center">
-          <span className="text-gray-500">Certificate Cover</span>
-        </div>
-        {children}
+    <div
+      className="bg-secondary p-6 rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300"
+      onClick={handleClick}
+    >
+      <div className="w-full h-64 bg-white rounded-md mb-4 flex items-center justify-center">
+        <span className="text-gray-500">Certificate Cover</span>
       </div>
-
-      {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] relative">
-            <button
-              onClick={handleClose}
-              className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-red-600 z-10"
-            >
-              ×
-            </button>
-            <iframe
-              src={pdfUrl}
-              className="w-full h-[80vh] rounded-lg"
-              title="PDF Viewer"
-            />
-          </div>
-        </div>
-      )}
-    </>
+      {children}
+    </div>
   )
 }
 
