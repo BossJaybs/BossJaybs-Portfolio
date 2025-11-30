@@ -26,10 +26,10 @@ export const Card: React.FC<CardProps> = ({ children, pdfUrl, coverImage }) => {
 
   return (
     <div
-      className="bg-secondary p-6 rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300"
+      className="bg-secondary p-4 md:p-6 rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300 mx-auto max-w-sm md:max-w-md"
       onClick={handleClick}
     >
-      <div className="w-full h-72 bg-black rounded-md mb-4 flex items-center justify-center overflow-hidden p-2">
+      <div className="w-full h-64 md:h-72 bg-black rounded-md mb-4 flex items-center justify-center overflow-hidden p-2">
         {coverImage ? (
           <Image
             src={coverImage}
@@ -68,22 +68,22 @@ const CardSwap: React.FC<CardSwapProps> = ({
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {children.map((child, index) => (
-            <div key={index} className="w-full flex-shrink-0">
+            <div key={index} className="w-full flex-shrink-0 px-2">
               {child}
             </div>
           ))}
         </div>
       </div>
-      <div className="flex justify-end gap-2 mt-4">
+      <div className="flex justify-center gap-4 mt-6">
         <button
           onClick={handlePrev}
-          className="bg-gray-800 text-white p-2 rounded-full hover:bg-gray-700 transition-colors"
+          className="bg-gray-800 text-white p-3 rounded-full hover:bg-gray-700 transition-colors shadow-lg"
         >
           ←
         </button>
         <button
           onClick={handleNext}
-          className="bg-gray-800 text-white p-2 rounded-full hover:bg-gray-700 transition-colors"
+          className="bg-gray-800 text-white p-3 rounded-full hover:bg-gray-700 transition-colors shadow-lg"
         >
           →
         </button>
