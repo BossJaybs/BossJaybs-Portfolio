@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
 
 interface CardSwapProps {
   cardDistance?: number
@@ -13,9 +14,10 @@ interface CardSwapProps {
 interface CardProps {
   children: React.ReactNode
   pdfUrl?: string
+  coverImage?: string
 }
 
-export const Card: React.FC<CardProps> = ({ children, pdfUrl }) => {
+export const Card: React.FC<CardProps> = ({ children, pdfUrl, coverImage }) => {
   const handleClick = () => {
     if (pdfUrl) {
       window.open(pdfUrl, '_blank')
@@ -27,8 +29,18 @@ export const Card: React.FC<CardProps> = ({ children, pdfUrl }) => {
       className="bg-secondary p-6 rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300"
       onClick={handleClick}
     >
-      <div className="w-full h-64 bg-white rounded-md mb-4 flex items-center justify-center">
-        <span className="text-gray-500">Certificate Cover</span>
+      <div className="w-full h-64 bg-white rounded-md mb-4 flex items-center justify-center overflow-hidden">
+        {coverImage ? (
+          <Image
+            src={coverImage}
+            alt="Certificate cover"
+            width={300}
+            height={200}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <span className="text-gray-500">Certificate Cover</span>
+        )}
       </div>
       {children}
     </div>
