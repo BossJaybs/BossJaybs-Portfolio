@@ -1,4 +1,5 @@
 import { skillList } from '@/appData'
+import CertificationsSection from '@/components/Certifications/CertificationsSection'
 import ContactSection from '@/components/Contact/ContactSection'
 import Hero from '@/components/Hero/Hero'
 import ProjectSection from '@/components/Projects/ProjectSection'
@@ -17,6 +18,7 @@ export default async function Home() {
         <ProjectSection projects={projects} />
         <ServiceSection />
         <TestimonialSection />
+        <CertificationsSection />
         <ContactSection />
       </div>
     </main>
