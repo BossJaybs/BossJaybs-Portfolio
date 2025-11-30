@@ -27,6 +27,9 @@ export const Card: React.FC<CardProps> = ({ children, pdfUrl }) => {
       className="bg-secondary p-6 rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300"
       onClick={handleClick}
     >
+      <div className="w-full h-32 bg-white rounded-md mb-4 flex items-center justify-center">
+        <span className="text-gray-500">Certificate Cover</span>
+      </div>
       {children}
     </div>
   )
