@@ -119,14 +119,16 @@ const CardSwap: React.FC<CardSwapProps> = ({
           ))}
         </div>
       </div>
-      <div className="flex justify-center mt-6">
-        <div className="flex gap-3">
+      <div className="flex justify-center mt-8">
+        <div className="flex gap-3 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
           {children.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`w-4 h-4 rounded-full transition-all duration-200 hover:scale-110 ${
-                index === currentIndex ? 'bg-gray-800 scale-110' : 'bg-gray-400 hover:bg-gray-600'
+              className={`w-5 h-5 rounded-full transition-all duration-300 hover:scale-125 ${
+                index === currentIndex
+                  ? 'bg-accent scale-125 shadow-lg'
+                  : 'bg-white/60 hover:bg-white/80'
               }`}
             />
           ))}
