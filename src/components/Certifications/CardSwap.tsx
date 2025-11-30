@@ -94,17 +94,19 @@ const CardSwap: React.FC<CardSwapProps> = ({
         </div>
       </div>
       <div className="flex justify-center mt-8">
-        <div className="flex gap-3 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
+        <div className="flex gap-2 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3">
           {children.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-5 h-5 rounded-full transition-all duration-300 hover:scale-125 ${
+              className={`w-8 h-8 rounded-full transition-all duration-300 hover:scale-110 flex items-center justify-center text-sm font-semibold ${
                 index === currentIndex
-                  ? 'bg-accent scale-125 shadow-lg'
-                  : 'bg-white/60 hover:bg-white/80'
+                  ? 'bg-accent text-white scale-110 shadow-lg'
+                  : 'bg-white/60 text-gray-700 hover:bg-white/80'
               }`}
-            />
+            >
+              {index + 1}
+            </button>
           ))}
         </div>
       </div>
