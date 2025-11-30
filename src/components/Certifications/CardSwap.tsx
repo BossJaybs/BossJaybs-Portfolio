@@ -63,29 +63,29 @@ const CardSwap: React.FC<CardSwapProps> = ({
   }
 
   return (
-    <div className="relative w-full">
-      <div className="flex overflow-hidden">
+    <div className="relative w-full max-w-6xl mx-auto">
+      <div className="flex justify-center overflow-hidden">
         <div
           className="flex transition-transform duration-500 ease-in-out"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {children.map((child, index) => (
-            <div key={index} className="w-full flex-shrink-0 px-2">
+            <div key={index} className="w-full max-w-md mx-auto flex-shrink-0 px-4">
               {child}
             </div>
           ))}
         </div>
       </div>
-      <div className="flex justify-center gap-4 mt-6">
+      <div className="flex justify-center gap-6 mt-8">
         <button
           onClick={handlePrev}
-          className="bg-gray-800 text-white p-3 rounded-full hover:bg-gray-700 transition-colors shadow-lg"
+          className="bg-gray-800 text-white p-4 rounded-full hover:bg-gray-700 transition-colors shadow-lg text-xl"
         >
           ←
         </button>
         <button
           onClick={handleNext}
-          className="bg-gray-800 text-white p-3 rounded-full hover:bg-gray-700 transition-colors shadow-lg"
+          className="bg-gray-800 text-white p-4 rounded-full hover:bg-gray-700 transition-colors shadow-lg text-xl"
         >
           →
         </button>
