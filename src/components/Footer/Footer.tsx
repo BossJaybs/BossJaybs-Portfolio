@@ -102,7 +102,7 @@ const Footer = () => {
         <div>
           <h5 className="mb-8 flex items-center gap-2">
             <Logo width={30} height={24} />
-            <span className="text-neutral text-lg font-medium">Logoipsum</span>
+            <span className="text-neutral text-lg font-medium">Bossjaybs</span>
           </h5>
           <p className="text-tertiary-content">
             The first free end-to-end analytics service for the site, designed to work with
