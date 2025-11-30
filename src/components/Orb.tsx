@@ -3,7 +3,9 @@
 import { useEffect, useRef } from 'react';
 import { Renderer, Camera, Transform, Sphere, Program, Mesh } from 'ogl';
 
-interface OrbProps {}
+interface OrbProps {
+  [key: string]: never;
+}
 
 const Orb: React.FC<OrbProps> = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);

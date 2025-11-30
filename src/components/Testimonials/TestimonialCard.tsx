@@ -25,7 +25,7 @@ const TestimonialCard: FC<TestimonialCardProps> = ({
     return () => {
       observer?.disconnect()
     }
-  }, [])
+  }, [handleActiveCard])
 
   return (
     <div
