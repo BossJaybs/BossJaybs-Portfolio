@@ -53,64 +53,38 @@ const CardSwap: React.FC<CardSwapProps> = ({
   children
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [isDragging, setIsDragging] = useState(false)
-  const [startX, setStartX] = useState(0)
-  const [dragOffset, setDragOffset] = useState(0)
-  const carouselRef = useRef<HTMLDivElement>(null)
+  const [isTransitioning, setIsTransitioning] = useState(false)
 
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setIsDragging(true)
-    setStartX(e.clientX)
-    setDragOffset(0)
+  const goToSlide = (index: number) => {
+    if (isTransitioning) return
+    setIsTransitioning(true)
+    setCurrentIndex(index)
+    setTimeout(() => setIsTransitioning(false), 300)
   }
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return
-    e.preventDefault()
-    const currentX = e.clientX
-    const diff = startX - currentX
-    setDragOffset(diff)
+  const goToNext = () => {
+    goToSlide((currentIndex + 1) % children.length)
   }
 
-  const handleMouseUp = () => {
-    if (!isDragging) return
-
-    const threshold = 50 // Minimum drag distance to change slide
-    if (Math.abs(dragOffset) > threshold) {
-      if (dragOffset > 0) {
-        // Dragged left, go to next
-        setCurrentIndex((prev) => (prev + 1) % children.length)
-      } else {
-        // Dragged right, go to previous
-        setCurrentIndex((prev) => (prev - 1 + children.length) % children.length)
-      }
-    }
-
-    setIsDragging(false)
-    setDragOffset(0)
+  const goToPrev = () => {
+    goToSlide((currentIndex - 1 + children.length) % children.length)
   }
 
-  const handleMouseLeave = () => {
-    if (isDragging) {
-      handleMouseUp()
-    }
-  }
+  // Auto-play functionality
+  useEffect(() => {
+    const interval = setInterval(() => {
+      goToNext()
+    }, 5000) // Change slide every 5 seconds
+
+    return () => clearInterval(interval)
+  }, [currentIndex, children.length])
 
   return (
     <div className="relative w-full max-w-6xl mx-auto">
-      <div
-        className="flex justify-center overflow-hidden cursor-grab active:cursor-grabbing select-none"
-        ref={carouselRef}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseLeave}
-      >
+      <div className="flex justify-center overflow-hidden">
         <div
-          className="flex transition-transform duration-300 ease-out"
-          style={{
-            transform: `translateX(calc(-${currentIndex * 100}% - ${isDragging ? dragOffset : 0}px))`
-          }}
+          className="flex transition-transform duration-500 ease-in-out"
+          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {children.map((child, index) => (
             <div key={index} className="w-full max-w-md mx-auto flex-shrink-0 px-4">
@@ -124,7 +98,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
           {children.map((_, index) => (
             <button
               key={index}
-              onClick={() => setCurrentIndex(index)}
+              onClick={() => goToSlide(index)}
               className={`w-5 h-5 rounded-full transition-all duration-300 hover:scale-125 ${
                 index === currentIndex
                   ? 'bg-accent scale-125 shadow-lg'
