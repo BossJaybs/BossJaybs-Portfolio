@@ -55,35 +55,45 @@ const CardSwap: React.FC<CardSwapProps> = ({
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
-  const [scrollLeft, setScrollLeft] = useState(0)
+  const [dragOffset, setDragOffset] = useState(0)
   const carouselRef = useRef<HTMLDivElement>(null)
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true)
-    setStartX(e.pageX - (carouselRef.current?.offsetLeft || 0))
-    setScrollLeft(currentIndex * (carouselRef.current?.clientWidth || 1))
+    setStartX(e.clientX)
+    setDragOffset(0)
   }
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging) return
     e.preventDefault()
-    const x = e.pageX - (carouselRef.current?.offsetLeft || 0)
-    const walk = (x - startX) * 2
-    const newScrollLeft = scrollLeft - walk
-    const maxScroll = (children.length - 1) * (carouselRef.current?.clientWidth || 1)
-
-    if (newScrollLeft >= 0 && newScrollLeft <= maxScroll) {
-      const newIndex = Math.round(newScrollLeft / (carouselRef.current?.clientWidth || 1))
-      setCurrentIndex(Math.max(0, Math.min(children.length - 1, newIndex)))
-    }
+    const currentX = e.clientX
+    const diff = startX - currentX
+    setDragOffset(diff)
   }
 
   const handleMouseUp = () => {
+    if (!isDragging) return
+
+    const threshold = 50 // Minimum drag distance to change slide
+    if (Math.abs(dragOffset) > threshold) {
+      if (dragOffset > 0) {
+        // Dragged left, go to next
+        setCurrentIndex((prev) => (prev + 1) % children.length)
+      } else {
+        // Dragged right, go to previous
+        setCurrentIndex((prev) => (prev - 1 + children.length) % children.length)
+      }
+    }
+
     setIsDragging(false)
+    setDragOffset(0)
   }
 
   const handleMouseLeave = () => {
-    setIsDragging(false)
+    if (isDragging) {
+      handleMouseUp()
+    }
   }
 
   return (
@@ -98,7 +108,9 @@ const CardSwap: React.FC<CardSwapProps> = ({
       >
         <div
           className="flex transition-transform duration-300 ease-out"
-          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          style={{
+            transform: `translateX(calc(-${currentIndex * 100}% - ${isDragging ? dragOffset : 0}px))`
+          }}
         >
           {children.map((child, index) => (
             <div key={index} className="w-full max-w-md mx-auto flex-shrink-0 px-4">
@@ -107,14 +119,14 @@ const CardSwap: React.FC<CardSwapProps> = ({
           ))}
         </div>
       </div>
-      <div className="flex justify-center mt-4">
-        <div className="flex gap-2">
+      <div className="flex justify-center mt-6">
+        <div className="flex gap-3">
           {children.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`w-3 h-3 rounded-full transition-colors ${
-                index === currentIndex ? 'bg-gray-800' : 'bg-gray-400'
+              className={`w-4 h-4 rounded-full transition-all duration-200 hover:scale-110 ${
+                index === currentIndex ? 'bg-gray-800 scale-110' : 'bg-gray-400 hover:bg-gray-600'
               }`}
             />
           ))}
